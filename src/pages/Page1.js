@@ -12,7 +12,7 @@ class Pages1 extends React.Component {
                 </div>
                 <div className='contenedorBotones'>
                     <Botones tituloBonton='MESERO' referencia='/mesero/RealizarPedido'/>
-                    <Botones tituloBonton='COCINERO' referencia='/'/>  
+                    <Botones tituloBonton='COCINERO' referencia='/cocinero/OrdenesDePedido'/>  
                 </div>              
             </div>
         )

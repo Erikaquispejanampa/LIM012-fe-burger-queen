@@ -4,6 +4,7 @@ import Page1 from './pages/Page1'
 import Page2 from './pages/Page2'
 import Page3 from './pages/Page3'
 import Page4 from './pages/Page4'
+import Page5 from './pages/Page5'
 
 const App = () => {
     return (
@@ -12,6 +13,7 @@ const App = () => {
             <Route exact path='/mesero/RealizarPedido' component={Page2}/>
             <Route exact path='/mesero/EstadoDePedido' component={Page3}/>
             <Route exact path='/mesero/HistorialDePedido' component={Page4}/>
+            <Route exact path='/cocinero/OrdenesDePedido' component={Page5}/>
             <Route component={Page1}/>
         </Switch>
     );
