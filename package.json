@@ -10,7 +10,10 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "5.2.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
+    "react-native-web": "~0.11.7",
+    "react-native-paper": "3.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
