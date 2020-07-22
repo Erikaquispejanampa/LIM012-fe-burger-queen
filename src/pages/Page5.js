@@ -3,7 +3,7 @@ import Cabecera from '../components/cabeceraCocinero'
 import AppCheck from '../components/AppCheck'
  import {obtenerPedidosTodos} from '../firebase-controller/firestore-controller'
 
-class Page4 extends React.Component {
+class Page5 extends React.Component {
    
     
 
@@ -23,4 +23,4 @@ class Page4 extends React.Component {
     }
  }
 
-export default Page4
+export default Page5
