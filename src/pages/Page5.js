@@ -1,26 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState, Fragment } from 'react';
 import Cabecera from '../components/cabeceraCocinero'
-import AppCheck from '../components/AppCheck'
- import {obtenerPedidosTodos} from '../firebase-controller/firestore-controller'
+import {obtenerPedidosCocina} from '../firebase-controller/firestore-controller'
+import ListaPedidos from '../components/pedidos/ListaPedidos'
 
-class Page5 extends React.Component {
-   
+const Page5 =()=> {
+   const [dataPedidos, setdataPedidos] = useState([]);
     
+      useEffect(() => {
+        obtenerPedidosCocina((data)=> {
+          console.log(data);
+          setdataPedidos(data);
+        });  
+         
+      }, []); 
+   
 
-    render(){
-
-        obtenerPedidosTodos((data)=> {
-            console.log(data)
-        });
         return (
-            <div>
-                <div><Cabecera/></div>
-                <div>
-                <AppCheck/>
-                </div>
-            </div>
-        )
-    }
+          <Fragment>
+            <Cabecera/>              
+            <ListaPedidos pedidos={dataPedidos}  esCocina = 'true'/>
+          </Fragment>
+        )    
+
+   
  }
 
 export default Page5
