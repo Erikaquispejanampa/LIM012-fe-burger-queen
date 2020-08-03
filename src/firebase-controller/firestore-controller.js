@@ -34,18 +34,33 @@ export const actualizarEstadoCocina = (idPedido, idDetalle) => {
 
  });
 
-  // console.log(pedido);
-  // pedido.detalle.map((detalle) => {
-  //   console.log(detalle);
-  // });
-  
-  // firebase.firestore().collection("OrdenPedido").doc(idPedido).update({
-  //   detalle :
-  // })
-
-
 }
 
+export const actualizarEstadoServido = (idPedido, idDetalle) => {
+
+  //Actualizar detalle de pedido, estado flagcocina
+
+ obtenerPedido(idPedido).then((data) => {
+    let pedido = data.data() 
+    let terminadoServido = true;
+
+    pedido.detalle.map( (prd) => {
+      if(prd.id === idDetalle){
+        prd.flagservido = !prd.flagservido;
+      }
+
+      if(!prd.flagservido)
+      terminadoServido = false;
+
+    });
+    
+    pedido.flagentregadomesero = terminadoServido;
+
+    firebase.firestore().collection("OrdenPedido").doc(idPedido).update(pedido);
+
+ });
+
+}
 
 
 export const obtenerPedidosMesero = (callback) => firebase.firestore().collection("OrdenPedido")
@@ -73,3 +88,15 @@ export const obtenerPedidosMesero = (callback) => firebase.firestore().collectio
     callback(pedidos);
   });
 
+  export const obtenerPedidosHistorico = (callback) => firebase.firestore().collection("OrdenPedido")
+  .orderBy('fechaini', 'asc')
+  .onSnapshot((querySnapshot) => {
+    const pedidos = [];
+    querySnapshot.forEach((doc) => {
+      
+      if(doc.data().flagentregadomesero === true){
+        pedidos.push({ id : doc.id, ...doc.data() });
+      }
+    });
+    callback(pedidos);
+  });

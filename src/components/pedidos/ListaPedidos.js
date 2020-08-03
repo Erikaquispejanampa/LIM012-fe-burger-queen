@@ -1,16 +1,10 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import { AccessAlarm, FilterBAndWRounded } from "@material-ui/icons";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import CardHeader from "@material-ui/core/CardHeader";
-import Avatar from "@material-ui/core/Avatar";
+
 
 import DetallePedido from "./DetallePedido";
 
@@ -42,6 +36,9 @@ const useStyles = makeStyles({
   CardEstado: {
     // marginBottom: 12,
     background: "green",
+    bottom:0,
+//    position: "absolute",
+    //width:"100%",
     // border: 4,
     // borderColor: 'black',
     // flex: 1
@@ -54,21 +51,79 @@ const useStyles = makeStyles({
   },
 });
 
-const ListaPedidos = ({ pedidos, esCocina }) => {
-  const classes = useStyles();
+const formatoFecha = (time) => {
+  
+  let date = new Date(time);
+  // let dia = date.getDay();
+  // let mes =  date.getMonth() + 1;
+  // let anio = date.getFullYear();
 
+  // console.log(date);
+  // console.log(dia);
+  // console.log(mes);
+  // console.log(anio);
+  // console.log(date.toLocaleString())
+  
+  return date.toLocaleString();
+}
+
+
+const intervaloTiempo = (date1,date2) => {
+  //Get 1 day in milliseconds
+  var one_day=1000*60*60*24;
+
+  // Convert both dates to milliseconds
+  var date1_ms = date1.getTime();
+  var date2_ms = date2.getTime();
+
+  // Calculate the difference in milliseconds
+  var difference_ms = date2_ms - date1_ms;
+  //take out milliseconds
+  difference_ms = difference_ms/1000;
+  var seconds = Math.floor(difference_ms % 60);
+  difference_ms = difference_ms/60; 
+  var minutes = Math.floor(difference_ms % 60);
+  difference_ms = difference_ms/60; 
+  var hours = Math.floor(difference_ms % 24);  
+  var days = Math.floor(difference_ms/24);
+  
+  // return days + ' days, ' + hours + ' hours, ' + minutes + ' minutes, and ' + seconds + ' seconds';
+  return  hours + ' hours, ' + minutes + ' minutes ';
+}
+
+
+
+
+const ListaPedidos = ({ pedidos, esCocina , esHistorico }) => {
+  const classes = useStyles();
+  console.log(esHistorico);
   return (
     <Fragment>
       <Grid container item xs={12} spacing={1}>
         <Grid container className={classes.grids} item xs={12} spacing={3}>
           {pedidos.map((pedido) => (
             <Card key={pedido.numero.toString()} className={classes.root}>
-             
-            <CardContent >
-                <div>Nª {pedido.numero}</div>
+
+              { esHistorico  =='true'  &&
+                <CardContent >
+                  <div>Orden Nª {pedido.numero}</div>
+                  <div>Nª de Mesa: {pedido.mesa}</div>
+                  <div>Inicio : {formatoFecha(pedido.fechaini.toDate())}</div>
+                  <div>Fin: {formatoFecha(pedido.fechafin.toDate()) }</div>
+                  <div>Tiempo: { intervaloTiempo(pedido.fechaini.toDate() , pedido.fechafin.toDate()) } </div>
+                  
+                  <DetallePedido detalle={pedido.detalle} esCocina={esCocina} idPedido = { pedido.id} esHistorico = {esHistorico} />
+                </CardContent>
+              }
+
+              { esHistorico  =='false'  || esHistorico  == undefined  &&
+              <CardContent >
+                <div>Orden Nª {pedido.numero}</div>
                 <div>Nª de Mesa: {pedido.mesa}</div>
-                <DetallePedido detalle={pedido.detalle} esCocina={esCocina} idPedido = { pedido.id} />
+                <DetallePedido detalle={pedido.detalle} esCocina={esCocina} idPedido = { pedido.id} esHistorico = {esHistorico} />
               </CardContent>
+              } 
+
 
               { esCocina =='true' &&
               <CardHeader className={classes.CardEstado}

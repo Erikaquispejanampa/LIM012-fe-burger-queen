@@ -10,7 +10,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
-import {actualizarEstadoCocina} from '../../firebase-controller/firestore-controller'
+import {actualizarEstadoCocina, actualizarEstadoServido} from '../../firebase-controller/firestore-controller'
 
 
 const useStyles = makeStyles({
@@ -44,21 +44,37 @@ const useStyles = makeStyles({
   avatar: {
     backgroundColor: "blue",
   },
+  title1:{
+    width:"300px",
+  },
+  title2:{
+    width:"80px",
+  },
 });
 
-const DetallePedido = ({ detalle, esCocina, idPedido }) => {
+const DetallePedido = ({ detalle, esCocina, idPedido , esHistorico }) => {
   const classes = useStyles();
 
   return (
     <Fragment>
       <List >
+      <ListItem>
+        <ListItemText primary="Producto" className={classes.title1} />
+        <ListItemText primary="Preparado" className={classes.title2} />
+        { esCocina =='false'  &&
+          <ListItemText primary="Servido" className={classes.title2} />
+        }
+      </ListItem>
+
+
         {detalle.map(prod => (
           <ListItem key={prod.id.toString()}>
             
-            <ListItemText primary={prod.producto} />
-            <Checkbox   checked = {prod.flagcocina} id = {prod.id} onClick  = { () => actualizarEstadoCocina(idPedido,prod.id) } />
+            <ListItemText primary={prod.producto} className={classes.title1} />
+            <Checkbox   checked = {prod.flagcocina} id = {prod.id} className={classes.title2}  disabled = {  (esCocina =='false' || esHistorico == 'true'  )   }  onClick  = { () =>  actualizarEstadoCocina(idPedido,prod.id)  } />
+           
             { esCocina =='false'  &&
-                <Checkbox   checked = {prod.flagservido} id = {prod.id}  />
+                <Checkbox   checked = {prod.flagservido} className={classes.title2} id = {prod.id}  disabled = { esHistorico ? true : (prod.flagcocina ? false : true)  }  onClick  = { () =>  actualizarEstadoServido(idPedido,prod.id)  }/>
             }
             
           </ListItem>

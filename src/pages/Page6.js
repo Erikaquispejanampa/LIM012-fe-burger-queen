@@ -1,9 +1,9 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import Cabecera from '../components/cabeceraMesero'
+import Cabecera from '../components/cabeceraCocinero'
 import {obtenerPedidosHistorico} from '../firebase-controller/firestore-controller'
 import ListaPedidos from '../components/pedidos/ListaPedidos'
 
-const Page4 =()=> {
+const Page6 =()=> {
 
     const [dataPedidos, setdataPedidos] = useState([]);
     
@@ -18,10 +18,10 @@ const Page4 =()=> {
     return (
             <Fragment>
             <Cabecera/>              
-            <ListaPedidos pedidos={dataPedidos}  esCocina = 'false' esHistorico ='true'/>
+            <ListaPedidos pedidos={dataPedidos}  esCocina = 'true' esHistorico ='true'/>
           </Fragment>
     )
     
  }
 
-export default Page4
+export default Page6
