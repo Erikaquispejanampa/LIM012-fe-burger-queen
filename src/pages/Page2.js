@@ -1,110 +1,179 @@
-import React from 'react'
-import Cabecera from '../components/cabeceraMesero'
-// import Producto from '../components/contenedorProducto'
-import Show from '../components/show'
-import './Page2.css'
+import React, { useEffect, useState }from 'react';
+import Cabecera from '../components/cabeceraMesero';
+import MostrarMenu from '../components/MostrarMenu';
+import db from '../conexionFirebase';
+import {obtenerMenu} from '../firebase/firestore'
+import './Page2.css';
+import OrdenPedidos from '../components/ordenPedidos';
 
-class Page2 extends React.Component {
-    constructor(props){
-        super(props);
-        this.state= {
-            counter: 1,
-            tipoProducto: 'desayuno',
-            nombreCli: '',
-            numeroMesa: '',            
-            pedido: {
-                    nombre: '',
-                    cantidad: 1,
-                    precio: 0
-            },
-            precioTotal: 0
-        }
+const Page2 = () => {
+    const [Menu, setMenu] = useState([]);
+    useEffect(() => {
+        obtenerMenu((data)=>{
+            console.log(data);
+            setMenu(data);
+        })
+    }, []);
+
+    const [tipoProducto, settipoProducto] = useState('desayuno');
+    const [nombreCli, setnombreCli] = useState('');
+    const [numeroMesa, setnumeroMesa] = useState('');
+    const [pedido, setpedido] = useState([]);
+    const [precioTotal, setprecioTotal] = useState(0);
+
+    const nombreChange = (e) => {
+        setnombreCli(e.target.value);
     }
-    render(){
-        const onIncrementClick = () => {
-            this.setState({
-              counter: this.state.counter + 1,
+    const mesaChange = (e) => {
+        setnumeroMesa(e.target.value);
+    }
+
+    const onIncrementClick = (event) => {
+        const elemento = event.target.id;
+        const sumandoContador =  pedido.map((dato) => {
+            if(dato.id === elemento)
+                dato.contador = dato.contador + 1;
+            return dato;
             });
-          }
-        const onDecrementClick = () => {
-            this.setState({
-              counter: this.state.counter - 1,
+        const precioT = sumandoContador.map((dato) => {
+            const total = dato.contador*dato.precio;
+            return total;           
+        })
+        let PrecioTo = 0;
+        for(let i = 0; i< precioT.length; i++){
+            PrecioTo = PrecioTo + precioT[i];
+        }
+        setpedido(sumandoContador);
+        setprecioTotal(PrecioTo);
+    }
+
+    const onDecrementClick = (event) => {
+        const elemento = event.target.id;
+        const RestandoContador =  pedido.map((dato) => {
+            if(dato.id === elemento)
+                dato.contador = dato.contador - 1;
+            return dato;
             });
-          }
-        const tipoDesayuno = () => {
-            this.setState({
-                tipoProducto: 'desayuno',
-            })
-        }
-        const tipoAlmuerzo = () => {
-            this.setState({
-                tipoProducto: 'almuerzo',
-            })            
-        }
-        const tipoBebida = () => {
-            this.setState({
-                tipoProducto: 'bebida',
-            })            
+        const precioT = RestandoContador.map((dato) => { 
+            if(dato.contador !== 0){
+                const total = dato.contador*dato.precio; 
+                return total;
+            } else {
+                const total = 0
+                return total;
+            }   
+        })
+        const eliminandoProducto = RestandoContador.filter((data) => {
+            return data.contador !== 0; 
+        });
+        let PrecioTo = 0;
+        for(let i = 0; i< precioT.length; i++){
+            PrecioTo = PrecioTo + precioT[i];
         }   
-        const obtenerPedido = () => {
-            // this.setState({
-            //     pedido: this.state.Menu,
-            // })
-            console.log(this.state)
-        } 
-        return (
-            <React.Fragment>
-                <Cabecera/>
-                <div className='contenedorCuerpo'>
-                    <div className='contenedorPedido'>
-                        <section className='descripcionPedido'>
-                            <div className='titulo'><p>ORDEN DE PEDIDO</p></div>
-                            <form className="formulario">
-                                N° de mesa:<input type="text" className="nroMesa"/><br/>
-                                Nombre del cliente:<input type="text" className="nombreCliente:"/>
-                            </form>
-                            <div>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Cantidad</th>
-                                            <th scope="col">Producto</th>
-                                            <th scope="col">Precio</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <button className='add-button' type='button' onClick={onIncrementClick}>+</button>
-                                                <p>{this.state.counter}</p>
-                                                <button className='add-button' type='button' onClick={onDecrementClick}>-</button>
-                                            </td>
-                                            <td>Nombre</td>
-                                            <td>precio</td>
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <p><strong>Total:</strong></p>
-                        </section>
-                        <button className='btnEnviar'>ENVIAR</button>
-                        <button className='btnCancelar'>CANCELAR</button>
-                    </div>
-                    <div className='productos'>
-                        <section className='selectorMenu'>
-                            <button className='btnMenu' onClick={tipoDesayuno}>DESAYUNO</button>
-                            <button className='btnMenu' onClick={tipoAlmuerzo}>ALMUERZO Y CENA</button>
-                            <button className='btnMenu' onClick={tipoBebida}>BEBIDAS</button>
-                        </section>
-                        <section>
-                            <Show tipoDeProducto={this.state.tipoProducto} onClick={obtenerPedido}/>
-                        </section>
-                    </div>
-                </div>
-            </React.Fragment>
-        )
+        setpedido(eliminandoProducto);
+        setprecioTotal(PrecioTo);
     }
- }
 
-export default Page2
+    const selecttipoProducto = (tipo) => {
+        settipoProducto(tipo);
+    }
+
+    const obtenerPedido = (event) => {
+        const idElemento = event.target.id;
+        const producto =  Menu.filter((data) => data.id === idElemento);
+        const obj = {
+            id: producto[0].id,
+            contador: 1,
+            producto: producto[0].data.nombreProducto,
+            precio: producto[0].data.precioProducto,
+            preparado: false,
+            servido: false,
+        }
+        const total =  precioTotal;
+        setprecioTotal(total + producto[0].data.precioProducto);
+        setpedido([... pedido, obj]);
+    } 
+
+    const enviarPedido = () => {
+        var date = new Date();
+        const horaActual = `${date.getHours()}h ${date.getMinutes()}m ${date.getSeconds()}s`;
+        const tiempo = date.getTime().toString();
+        console.log('tiempo', date.getTime())
+        console.log(tiempo);
+        db.collection('pedidos').add({
+            horaInicio: horaActual,
+            tiempoInicio: tiempo,
+            tiempoTermino: '',
+            nombreCliente:  nombreCli,
+            numeroMesa:  numeroMesa,
+            pedidos:  pedido,
+            precioTotal:  precioTotal,
+            pedidoEntregado: false,
+            pedidoTerminado: false,
+        }).then(() => {
+            document.querySelector('.nroMesa').value = '';
+            document.querySelector('.nombreCliente').value = '';        
+            setpedido([]);
+            setprecioTotal(0);
+            console.log('Subido exitosamente');
+        }).catch(() => {
+            console.log('error');
+        })
+    }
+
+    const cancelarPedido = () => {
+        document.querySelector('.nroMesa').value = '';
+        document.querySelector('.nombreCliente').value = '';          
+        setpedido([]);
+        setprecioTotal(0);
+    }
+    return (
+        <React.Fragment>
+            <Cabecera/>
+            <div className='contenedorCuerpo'>
+                <div className='contenedorPedido'>
+                    <section className='descripcionPedido'>
+                        <div className='titulo'>ORDEN  DE  PEDIDO</div>
+                        <form className="formulario">
+                            N° de mesa:<input type="text" className="nroMesa ingresoDatos" onChange={mesaChange}/><br/><br/>
+                            Nombre del cliente:<input type="text" className="nombreCliente ingresoDatos" onChange={nombreChange}/>
+                        </form>
+                        <div className='contenedorTabla'>
+                            <table className='tabla'>
+                                <tbody>
+                                    {pedido.map((item, key) => {
+                                        return (
+                                            <OrdenPedidos key={key}
+                                                idcontenedor={item.id}
+                                                Increment={onIncrementClick}
+                                                Decrement={onDecrementClick}
+                                                counter={item.contador}
+                                                nombre={item.producto}
+                                                precio={item.precio}
+                                            />                        
+                                        );   
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className='total'>Total: { precioTotal}</div>
+                    </section>
+                    <button className='btnEnviar' onClick={enviarPedido}>ENVIAR</button>
+                    <button className='btnCancelar' onClick={cancelarPedido}>CANCELAR</button>
+                </div>
+                <div className='productos'>
+                    <section className='selectorMenu'>
+                        <button className='btnMenu' onClick={()=>{selecttipoProducto('desayuno')}}>DESAYUNO</button>
+                        <button className='btnMenu' onClick={()=>{selecttipoProducto('almuerzo')}}>ALMUERZO Y CENA</button>
+                        <button className='btnMenu' onClick={()=>{selecttipoProducto('bebida')}}>BEBIDAS</button>
+                    </section>
+                    <section className='mostradorPedidos'>
+                        <MostrarMenu menu={Menu} tipoDeProducto={tipoProducto} onClick={obtenerPedido}/>
+                    </section>
+                </div>
+            </div>
+        </React.Fragment>
+    )
+}
+
+export default Page2;

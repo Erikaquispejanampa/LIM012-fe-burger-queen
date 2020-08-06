@@ -3,14 +3,18 @@ import './styles/contenedorProducto.css';
 
 const Producto = ({ ImageProducto, nombreProducto, precioProducto, idProducto, click }) => {
     return (
-        <button className='contenedorProductoUno' id={idProducto} onClick={click}>
+        <div className='contenedorProductoUno'>
             <div className='contenedorComida'>
                 <img className='imagenProducto' src={ImageProducto} alt={nombreProducto}/>
             </div>
-            <div className='contenedorNombre'><p className='nombre'>{nombreProducto}</p></div>
-            <div className='contenedorPrecio'><p className='precio'>S/ {precioProducto}</p></div>
-        </button>
+            <div className='contenedorNombre'>
+                <p className='nombre'>{nombreProducto}</p>
+            </div>
+            <button className='contenedorPrecio' id={idProducto} onClick={click}>
+                S/ {precioProducto}
+            </button>
+        </div>
     )
 }
 
-export default Producto
+export default Producto;

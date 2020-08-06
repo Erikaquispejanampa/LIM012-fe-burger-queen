@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 // import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom'
 import App from './App';
-import 'firebase/firebase-firestore'
 
 ReactDOM.render(
     <BrowserRouter>

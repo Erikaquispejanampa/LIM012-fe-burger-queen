@@ -10,7 +10,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
-import { actualizarEstadoServido} from '../../firebase/firestore'
+import {actualizarEstadoCocina} from '../../firebase/firestore'
 
 
 const useStyles = makeStyles({
@@ -52,21 +52,20 @@ const useStyles = makeStyles({
   },
 });
 
-const DetallePedido = ({ detalle, idPedido , esHistorico }) => {
+const DetalleCocina = ({ detalle, idPedido , esHistorico }) => {
   const classes = useStyles();
-
+console.log(detalle);
   return (
     <Fragment>
       <List >
-      <ListItem>
-        <ListItemText primary="Producto" className={classes.title1} />
-        {esHistorico =='false'  &&
-        <ListItemText primary="Preparado" className={classes.title2} />
-        }
-        { esHistorico =='false'  &&
-          <ListItemText primary="Servido" className={classes.title2} />
-        }
-      </ListItem>
+        <ListItem>
+          <ListItemText primary="Producto" className={classes.title1} />
+        
+          {esHistorico =='false'  &&
+            <ListItemText primary="Preparado" className={classes.title2} />
+          }
+        
+        </ListItem>
 
 
         {detalle.map(prod => (
@@ -75,12 +74,8 @@ const DetallePedido = ({ detalle, idPedido , esHistorico }) => {
             <ListItemText primary={prod.producto} className={classes.title1} />
 
             { esHistorico =='false'  &&
-              <Checkbox   checked = {prod.flagcocina}  id = {prod.id} className={classes.title2}  disabled =  'true'  />
+              <Checkbox   checked = {prod.flagcocina}  id = {prod.id} className={classes.title2}  disabled = {   esHistorico == 'true'     }  onClick  = { () =>  actualizarEstadoCocina(idPedido,prod.id)  } />
 
-            }
-
-            { esHistorico =='false'   &&
-                <Checkbox   checked = {prod.flagservido} className={classes.title2} id = {prod.id}  disabled = { esHistorico == 'true'   }  onClick  = { () =>  actualizarEstadoServido(idPedido,prod.id)  }/>
             }
             
           </ListItem>
@@ -89,4 +84,4 @@ const DetallePedido = ({ detalle, idPedido , esHistorico }) => {
     </Fragment>
   );
 };
-export default DetallePedido;
+export default DetalleCocina;

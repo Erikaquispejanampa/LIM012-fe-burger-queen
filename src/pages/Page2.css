@@ -5,9 +5,10 @@
     justify-content: center;
     align-items: center;    
     flex-direction: row;
+    margin: 0;
 }
 .contenedorPedido{
-    width: 40%;
+    width: 45%;
     height: 100%;
     background-image: url('../images/fondoladrillo.jpg');
     display: flex;
@@ -15,12 +16,12 @@
     align-items: center;
 }
 .productos{
-    width: 60%;
+    width: 55%;
     height: 100%;
 }
 .descripcionPedido{
-    width: 80%;
-    height: 500px;
+    width: 85%;
+    height: 70%;
     background: #FFFFFF;
     font-size: 24px;
     margin-top: 2rem;
@@ -35,9 +36,20 @@
     display: flex;
     align-content: center;
     justify-content: center;
+    padding: 10px 0 10px 0;
+}
+.formulario{
+    font-size: 28px;
+    padding-left: 10px;
+}
+.ingresoDatos{
+    border: 1px solid #ffffff;
+}
+input:focus, input[type]:focus {
+    outline: 0 none;
 }
 .btnEnviar{
-    width: 80%;
+    width: 85%;
     background: #2EA44F;
     color: #FAFBFC;
     font-size: 30px;
@@ -46,7 +58,7 @@
     margin-bottom: 10px;
 }
 .btnCancelar{
-    width: 80%;
+    width: 85%;
     background: #FAFBFC;
     color: #CB3544;
     font-size: 30px;
@@ -74,4 +86,25 @@
 }
 .btnMenu:focus {
     outline: none;
-  }
+}
+.contenedorTabla{
+    width: 90%;
+    height: 482px;
+    overflow: scroll;
+}
+.tabla{
+    width: 100%;
+    padding-left: 10px;
+}
+.mostradorPedidos{
+    height: 80%;
+    overflow: scroll;
+}
+.total{
+    width: 100%;
+    font-size: 30px;
+    font-weight: bold;
+    background: #EDBA6B;
+    color: #1C1712;
+    padding: 10px 0 10px 0;
+}

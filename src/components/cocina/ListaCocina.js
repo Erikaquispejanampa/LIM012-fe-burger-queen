@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import CardHeader from "@material-ui/core/CardHeader";
 
 
-import DetallePedido from "./DetallePedido";
+import DetalleCocina from "./DetalleCocina";
 
 const useStyles = makeStyles({
   root: {
@@ -94,7 +94,7 @@ const intervaloTiempo = (date1,date2) => {
 
 
 
-const ListaPedidos = ({ pedidos, esHistorico }) => {
+const ListaCocina = ({ pedidos, esHistorico }) => {
   const classes = useStyles();
   console.log(esHistorico);
   return (
@@ -113,7 +113,7 @@ const ListaPedidos = ({ pedidos, esHistorico }) => {
                   <div>Fin: {formatoFecha(pedido.fechafin.toDate()) }</div>
                   <div>Tiempo: { intervaloTiempo(pedido.fechaini.toDate() , pedido.fechafin.toDate()) } </div>
                   
-                  <DetallePedido detalle={pedido.detalle} idPedido = { pedido.id} esHistorico = {esHistorico} />
+                  <DetalleCocina detalle={pedido.detalle}  idPedido = { pedido.id} esHistorico = {esHistorico} />
                 </CardContent>
               }
               
@@ -121,15 +121,14 @@ const ListaPedidos = ({ pedidos, esHistorico }) => {
                 <CardContent >
                   <div>Orden Nª {pedido.numero}</div>
                   <div>Nª de Mesa: {pedido.mesa}</div>
-                  <DetallePedido detalle={pedido.detalle}  idPedido = { pedido.id} esHistorico = {esHistorico} />
+                  <DetalleCocina detalle={pedido.detalle} idPedido = { pedido.id} esHistorico = {esHistorico} />
                 </CardContent>
               } 
 
               <CardHeader className={classes.CardEstado}
-                  title= {pedido.flagentregadomesero ? "ENTREGADO":"PENDIENTE DE ENTREGAR" }
+                title= {pedido.flagterminadococina ? "PEDIDO TERMINADO":"PEDIDO PENDIENTE" }
               />
-               
-
+              
             </Card>
           ))}
         </Grid>
@@ -138,4 +137,4 @@ const ListaPedidos = ({ pedidos, esHistorico }) => {
   );
 };
 
-export default ListaPedidos;
+export default ListaCocina;

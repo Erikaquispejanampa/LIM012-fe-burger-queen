@@ -1,0 +1,18 @@
+.controladorContador{
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+}
+.btnContador{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 2px solid #000000;
+    background: #FFFFFF;
+    font-size: 25px;
+    font-weight: bold;
+}
+/* .contPrecio{
+    display: flex;
+    justify-content: flex-end;
+} */

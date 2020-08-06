@@ -1,7 +1,7 @@
 import React from 'react'
 import Botones from '../components/botones'
 import logo from '../images/logoBG.png'
-import './Page1.css'
+import './Page1.scss'
 
 class Pages1 extends React.Component {
     render(){

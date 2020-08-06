@@ -1,14 +1,14 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import Cabecera from '../components/cabeceraCocinero'
-import {obtenerPedidosHistorico} from '../firebase-controller/firestore-controller'
-import ListaPedidos from '../components/pedidos/ListaPedidos'
+import Cabecera from '../components/cabeceraCocinero';
+import {obtenerCocinaHistorico} from '../firebase/firestore';
+import ListaCocina from '../components/cocina/ListaCocina';
 
 const Page6 =()=> {
 
     const [dataPedidos, setdataPedidos] = useState([]);
     
     useEffect(() => {
-        obtenerPedidosHistorico((data)=> {
+      obtenerCocinaHistorico((data)=> {
         console.log(data);
         setdataPedidos(data);
       });  
@@ -18,7 +18,7 @@ const Page6 =()=> {
     return (
             <Fragment>
             <Cabecera/>              
-            <ListaPedidos pedidos={dataPedidos}  esCocina = 'true' esHistorico ='true'/>
+            <ListaCocina pedidos={dataPedidos}  esHistorico ='true'/>
           </Fragment>
     )
     

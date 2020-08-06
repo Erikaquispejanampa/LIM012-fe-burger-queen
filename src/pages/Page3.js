@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import Cabecera from '../components/cabeceraMesero'
-import {obtenerPedidosMesero} from '../firebase-controller/firestore-controller'
+import {obtenerPedidosMesero} from '../firebase/firestore'
 import ListaPedidos from '../components/pedidos/ListaPedidos'
 
 const Page3 =()=> {
@@ -18,7 +18,7 @@ const Page3 =()=> {
     return (
             <Fragment>
             <Cabecera/>              
-            <ListaPedidos pedidos={dataPedidos}  esCocina = 'false'/>
+            <ListaPedidos pedidos={dataPedidos}  esHistorico = 'false'/>
           </Fragment>
     )
     
