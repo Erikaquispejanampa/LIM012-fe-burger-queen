@@ -2,7 +2,7 @@ import React, { useEffect, useState }from 'react';
 import Cabecera from '../components/cabeceraMesero';
 import MostrarMenu from '../components/MostrarMenu';
 import db from '../conexionFirebase';
-import {obtenerMenu} from '../firebase/firestore'
+import {obtenerMenu,obtenerNumeroPedido,crearPedido} from '../firebase/firestore'
 import './Page2.css';
 import OrdenPedidos from '../components/ordenPedidos';
 
@@ -10,7 +10,6 @@ const Page2 = () => {
     const [Menu, setMenu] = useState([]);
     useEffect(() => {
         obtenerMenu((data)=>{
-            console.log(data);
             setMenu(data);
         })
     }, []);
@@ -86,8 +85,8 @@ const Page2 = () => {
             contador: 1,
             producto: producto[0].data.nombreProducto,
             precio: producto[0].data.precioProducto,
-            preparado: false,
-            servido: false,
+            flagcocina: false,
+            flagservido: false,
         }
         const total =  precioTotal;
         setprecioTotal(total + producto[0].data.precioProducto);
@@ -95,31 +94,71 @@ const Page2 = () => {
     } 
 
     const enviarPedido = () => {
-        var date = new Date();
-        const horaActual = `${date.getHours()}h ${date.getMinutes()}m ${date.getSeconds()}s`;
-        const tiempo = date.getTime().toString();
-        console.log('tiempo', date.getTime())
-        console.log(tiempo);
-        db.collection('pedidos').add({
-            horaInicio: horaActual,
-            tiempoInicio: tiempo,
-            tiempoTermino: '',
-            nombreCliente:  nombreCli,
-            numeroMesa:  numeroMesa,
-            pedidos:  pedido,
-            precioTotal:  precioTotal,
-            pedidoEntregado: false,
-            pedidoTerminado: false,
-        }).then(() => {
-            document.querySelector('.nroMesa').value = '';
-            document.querySelector('.nombreCliente').value = '';        
-            setpedido([]);
-            setprecioTotal(0);
-            console.log('Subido exitosamente');
-        }).catch(() => {
-            console.log('error');
-        })
+        // let num = obtenerNumeroPedido();
+        // console.log(num);
+        let num = 1;
+        obtenerNumeroPedido().then( (querySnapshot) => {
+            
+            querySnapshot.forEach((doc) => {
+                num = doc.data().numero + 1;
+                console.log(num);
+            });
+
+            crearPedido({
+                fechaini: new Date(),
+                fechafin: '',
+                cliente:  nombreCli,
+                mesa:  numeroMesa,
+                detalle:  pedido,
+                preciototal:  precioTotal,
+                flagentregadomesero: false,
+                flagterminadococina: false,
+                numero:  num
+            }).then((e) => {
+                
+                document.querySelector('.nroMesa').value = '';
+                document.querySelector('.nombreCliente').value = '';        
+                setpedido([]);
+                setprecioTotal(0);
+                console.log('Subido exitosamente');
+            }).catch(() => {
+               console.log('error');
+            })
+
+        });
+
+
     }
+
+    // const enviarPedido = () => {
+    //     let date = new Date();
+    //     console.log(date.toUTCString())
+    //     // const horaActual = `${date.getHours()}h ${date.getMinutes()}m ${date.getSeconds()}s`;
+    //     // const tiempo = date.getTime().toString();
+    //     // console.log('tiempo', date.getTime())
+    //     // console.log(tiempo);
+
+
+    //     db.collection('OrdenPedido').add({
+    //         fechaini: date,//date.toUTCString(),
+    //         fechafin: '',
+    //         cliente:  nombreCli,
+    //         mesa:  numeroMesa,
+    //         detalle:  pedido,
+    //         preciototal:  precioTotal,
+    //         flagentregadomesero: false,
+    //         flagterminadococina: false,
+    //     }).then((e) => {
+
+    //         document.querySelector('.nroMesa').value = '';
+    //         document.querySelector('.nombreCliente').value = '';        
+    //         setpedido([]);
+    //         setprecioTotal(0);
+    //         console.log('Subido exitosamente');
+    //     }).catch(() => {
+    //         console.log('error');
+    //     })
+    // }
 
     const cancelarPedido = () => {
         document.querySelector('.nroMesa').value = '';

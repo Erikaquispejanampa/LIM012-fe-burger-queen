@@ -1,55 +1,5 @@
 import React, { useEffect, useState, Fragment } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Grid from "@material-ui/core/Grid";
-import CardHeader from "@material-ui/core/CardHeader";
-
-
 import DetallePedido from "./DetallePedido";
-
-const useStyles = makeStyles({
-  root: {
-    //  minWidth: 275,
-    // background: 'yellow',
-    border: 8,
-    borderColor: "black",
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-  CardContents: {
-    // marginBottom: 12,
-    background: "gray",
-    // border: 4,
-    // borderColor: 'black',
-    // flex: 1
-  },
-  CardEstado: {
-    // marginBottom: 12,
-    background: "green",
-    bottom:0,
-//    position: "absolute",
-    //width:"100%",
-    // border: 4,
-    // borderColor: 'black',
-    // flex: 1
-  },
-  grids: {
-    flexGrow: 1,
-  },
-  avatar: {
-    backgroundColor: "blue",
-  },
-});
 
 const formatoFecha = (time) => {
   
@@ -95,45 +45,42 @@ const intervaloTiempo = (date1,date2) => {
 
 
 const ListaPedidos = ({ pedidos, esHistorico }) => {
-  const classes = useStyles();
   console.log(esHistorico);
   return (
     <Fragment>
-      <Grid container item xs={12} spacing={1}>
-        <Grid container className={classes.grids} item xs={12} spacing={3}>
-          {pedidos.map((pedido) => (
-            <Card key={pedido.numero.toString()} className={classes.root}>
+        <div>
+          {pedidos.map((pedido, key) => (
+            <section key={key}>
 
               { esHistorico  =='true'  &&
-                <CardContent >
-                  <div>Orden Nª {pedido.numero}</div>
-                  <div>Nª de Mesa: {pedido.mesa}</div>
+                <section>
+                  <div>Orden N°</div>
+                  <div>N° de Mesa: {pedido.mesa}</div>
                   <div>Cliente: {pedido.cliente}</div>
                   <div>Inicio : {formatoFecha(pedido.fechaini.toDate())}</div>
                   <div>Fin: {formatoFecha(pedido.fechafin.toDate()) }</div>
                   <div>Tiempo: { intervaloTiempo(pedido.fechaini.toDate() , pedido.fechafin.toDate()) } </div>
                   
                   <DetallePedido detalle={pedido.detalle} idPedido = { pedido.id} esHistorico = {esHistorico} />
-                </CardContent>
+                </section>
               }
               
               { esHistorico  == 'false'  &&
-                <CardContent >
+                <section>
                   <div>Orden Nª {pedido.numero}</div>
                   <div>Nª de Mesa: {pedido.mesa}</div>
                   <DetallePedido detalle={pedido.detalle}  idPedido = { pedido.id} esHistorico = {esHistorico} />
-                </CardContent>
+                </section>
               } 
 
-              <CardHeader className={classes.CardEstado}
+              <button
                   title= {pedido.flagentregadomesero ? "ENTREGADO":"PENDIENTE DE ENTREGAR" }
-              />
+              ></button>
                
 
-            </Card>
+            </section>
           ))}
-        </Grid>
-      </Grid>
+        </div>
     </Fragment>
   );
 };

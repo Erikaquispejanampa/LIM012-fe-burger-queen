@@ -3,7 +3,11 @@ import db from '../conexionFirebase';
 
 
 export const crearPedido = (json) => {
-  firebase.firestore().collection("OrdenPedido").add(json);
+  return db.collection("OrdenPedido").add(json);
+};
+
+export const actualizarPedido = (idPedido, data) => {
+  firebase.firestore().collection("OrdenPedido").doc(idPedido).update(data);
 };
 
 export const obtenerPedido = (id) => {
@@ -31,7 +35,8 @@ export const actualizarEstadoCocina = (idPedido, idDetalle) => {
     
     pedido.flagterminadococina = terminadoCocina;
 
-    firebase.firestore().collection("OrdenPedido").doc(idPedido).update(pedido);
+    actualizarPedido(idPedido,pedido);
+    // firebase.firestore().collection("OrdenPedido").doc(idPedido).update(pedido);
 
  });
 
@@ -54,14 +59,50 @@ export const actualizarEstadoServido = (idPedido, idDetalle) => {
       terminadoServido = false;
 
     });
+
+    //Si todo esta terminado, actualizo fecha fin de pedido
+
+    if(terminadoServido){
+      pedido.fechafin = new Date();//.toUTCString();
+    }
     
     pedido.flagentregadomesero = terminadoServido;
 
-    firebase.firestore().collection("OrdenPedido").doc(idPedido).update(pedido);
+    actualizarPedido(idPedido,pedido);
+    // firebase.firestore().collection("OrdenPedido").doc(idPedido).update(pedido);
 
  });
 
 }
+
+
+// export const obtenerNumeroPedido = () =>  {
+//   let numero = 1;
+
+//   firebase.firestore().collection("OrdenPedido")
+//   .orderBy('numero', 'desc')
+//   .limit(1)
+//   .get()
+//   .then((querySnapshot) => {
+  
+//     querySnapshot.forEach((doc) => {
+//       numero = doc.data().numero + 1;
+//       console.log(numero);
+//     });
+//   });
+
+//   return numero;
+// }
+
+
+export const obtenerNumeroPedido = () =>  {
+  return firebase.firestore().collection("OrdenPedido")
+  .orderBy('numero', 'desc')
+  .limit(1)
+  .get();
+}
+
+
 
 
 export const obtenerPedidosMesero = (callback) => firebase.firestore().collection("OrdenPedido")
@@ -127,7 +168,8 @@ export const obtenerPedidosMesero = (callback) => firebase.firestore().collectio
       console.log(tiempo);
       pedido.flagterminadococina = true;
       pedido.tiempoTermino = tiempo;
-      firebase.firestore().collection("OrdenPedido").doc(idPedido).update(pedido);
+      actualizarPedido(idPedido,pedido);
+      // firebase.firestore().collection("OrdenPedido").doc(idPedido).update(pedido);
    });
   }
   
@@ -135,7 +177,8 @@ export const obtenerPedidosMesero = (callback) => firebase.firestore().collectio
     obtenerPedido(idPedido).then((data) => {
       let pedido = data.data()
       pedido.flagentregadomesero = true;
-      firebase.firestore().collection("OrdenPedido").doc(idPedido).update(pedido);
+      actualizarPedido(idPedido,pedido);
+      // firebase.firestore().collection("OrdenPedido").doc(idPedido).update(pedido);
    });
   }
   export const obtenerHistorial = (callback) => firebase.firestore().collection("OrdenPedido")
