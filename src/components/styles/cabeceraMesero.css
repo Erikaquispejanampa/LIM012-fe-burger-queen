@@ -4,8 +4,9 @@ header{
     display: flex;
     flex-direction: row;
     background: #412A21;
-    color: #FFFFFF;    
-    border-left: 4px solid #FFFFFF;
+    color: #FFFFFF;   
+    margin: 0; 
+    /* border-left: 4px solid #FFFFFF; */
 }
 .contenedorBtn{
     width: 70%;
@@ -27,7 +28,7 @@ header{
     border-style: solid ;
     border-color: #FFFFFF;
     border-width: 5px 5px 5px 0px; /* top, right, bottom and left */
-    font-size: 27px;
+    font-size: 25px;
     display: flex;
     align-items: center;
     justify-content: center;

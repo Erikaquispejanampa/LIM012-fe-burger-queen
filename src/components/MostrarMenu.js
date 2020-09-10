@@ -1,6 +1,6 @@
 import React from 'react'
 import Producto from './contenedorProducto'
-import './styles/mostrarMenu.scss'
+import './styles/show.css'
 
 const MostrarMenu = ({ tipoDeProducto, menu, onClick }) => {
     const menuTodo = menu;

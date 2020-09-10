@@ -1,8 +1,9 @@
 import React, { useEffect, useState }from 'react';
 import Cabecera from '../components/cabeceraMesero';
 import MostrarMenu from '../components/MostrarMenu';
+import db from '../conexionFirebase';
 import {obtenerMenu,obtenerNumeroPedido,crearPedido} from '../firebase/firestore'
-import './stylesPages/Page2.scss';
+import './Page2.css';
 import OrdenPedidos from '../components/ordenPedidos';
 
 const Page2 = () => {
@@ -93,12 +94,16 @@ const Page2 = () => {
     } 
 
     const enviarPedido = () => {
+        // let num = obtenerNumeroPedido();
+        // console.log(num);
         let num = 1;
         obtenerNumeroPedido().then( (querySnapshot) => {
+            
             querySnapshot.forEach((doc) => {
                 num = doc.data().numero + 1;
                 console.log(num);
             });
+
             crearPedido({
                 fechaini: new Date(),
                 fechafin: '',
@@ -109,7 +114,8 @@ const Page2 = () => {
                 flagentregadomesero: false,
                 flagterminadococina: false,
                 numero:  num
-            }).then(() => {
+            }).then((e) => {
+                
                 document.querySelector('.nroMesa').value = '';
                 document.querySelector('.nombreCliente').value = '';        
                 setpedido([]);
@@ -118,8 +124,41 @@ const Page2 = () => {
             }).catch(() => {
                console.log('error');
             })
+
         });
+
+
     }
+
+    // const enviarPedido = () => {
+    //     let date = new Date();
+    //     console.log(date.toUTCString())
+    //     // const horaActual = `${date.getHours()}h ${date.getMinutes()}m ${date.getSeconds()}s`;
+    //     // const tiempo = date.getTime().toString();
+    //     // console.log('tiempo', date.getTime())
+    //     // console.log(tiempo);
+
+
+    //     db.collection('OrdenPedido').add({
+    //         fechaini: date,//date.toUTCString(),
+    //         fechafin: '',
+    //         cliente:  nombreCli,
+    //         mesa:  numeroMesa,
+    //         detalle:  pedido,
+    //         preciototal:  precioTotal,
+    //         flagentregadomesero: false,
+    //         flagterminadococina: false,
+    //     }).then((e) => {
+
+    //         document.querySelector('.nroMesa').value = '';
+    //         document.querySelector('.nombreCliente').value = '';        
+    //         setpedido([]);
+    //         setprecioTotal(0);
+    //         console.log('Subido exitosamente');
+    //     }).catch(() => {
+    //         console.log('error');
+    //     })
+    // }
 
     const cancelarPedido = () => {
         document.querySelector('.nroMesa').value = '';
@@ -128,36 +167,34 @@ const Page2 = () => {
         setprecioTotal(0);
     }
     return (
-        <div className=''>
+        <React.Fragment>
             <Cabecera/>
             <div className='contenedorCuerpo'>
                 <div className='contenedorPedido'>
                     <section className='descripcionPedido'>
-                        <div>
-                            <div className='titulo'>ORDEN  DE  PEDIDO</div>
-                                <form className="formulario">
-                                    N° de mesa:<input type="text" className="nroMesa ingresoDatos" onChange={mesaChange}/><br/>
-                                    Cliente:<input type="text" className="nombreCliente ingresoDatos" onChange={nombreChange}/>
-                                </form>
-                                <div className='contenedorTabla'>
-                                    <table className='tabla'>
-                                        <tbody>
-                                            {pedido.map((item, key) => {
-                                                return (
-                                                    <OrdenPedidos key={key}
-                                                        idcontenedor={item.id}
-                                                        Increment={onIncrementClick}
-                                                        Decrement={onDecrementClick}
-                                                        counter={item.contador}
-                                                        nombre={item.producto}
-                                                        precio={item.precio}
-                                                    />                        
-                                                );   
-                                            })}
-                                        </tbody>
-                                    </table>
-                                </div>   
-                        </div>    
+                        <div className='titulo'>ORDEN  DE  PEDIDO</div>
+                        <form className="formulario">
+                            N° de mesa:<input type="text" className="nroMesa ingresoDatos" onChange={mesaChange}/><br/><br/>
+                            Nombre del cliente:<input type="text" className="nombreCliente ingresoDatos" onChange={nombreChange}/>
+                        </form>
+                        <div className='contenedorTabla'>
+                            <table className='tabla'>
+                                <tbody>
+                                    {pedido.map((item, key) => {
+                                        return (
+                                            <OrdenPedidos key={key}
+                                                idcontenedor={item.id}
+                                                Increment={onIncrementClick}
+                                                Decrement={onDecrementClick}
+                                                counter={item.contador}
+                                                nombre={item.producto}
+                                                precio={item.precio}
+                                            />                        
+                                        );   
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                         <div className='total'>Total: { precioTotal}</div>
                     </section>
                     <button className='btnEnviar' onClick={enviarPedido}>ENVIAR</button>
@@ -174,7 +211,8 @@ const Page2 = () => {
                     </section>
                 </div>
             </div>
-        </div>
+        </React.Fragment>
     )
 }
+
 export default Page2;
