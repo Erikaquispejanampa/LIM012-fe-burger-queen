@@ -1,5 +1,5 @@
 import React from 'react'
-import './styles/botones.css'
+import './styles/botones.scss'
 import { Link } from 'react-router-dom'
 
 const Botones = ({ tituloBonton, referencia }) => {

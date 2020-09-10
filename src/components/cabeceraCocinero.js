@@ -1,19 +1,14 @@
 import React from 'react'
-import './styles/cabeceraMesero.css'
+import './styles/cabeceraMesero.scss'
 import logo from '../images/logoBG.png'
-import {
-    // BrowserRouter as Router,
-    // Switch,
-    // Route,
-    Link
-  } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Cabecera = () => {
     return (
         <header>
             <div className='contenedorBtn'>
-                <div className='btnHeader'><Link to="/cocinero/OrdenesDePedido" className='links'>ESTADO DEL COCINERO</Link></div>
-                <div className='btnHeader'><Link to="/cocinero/HistoricoCocina" className='links'>HISTORIAL DE COCINA</Link></div>
+                <div className='btnHeader btnHeaderCocinero'><Link to="/cocinero/EstadoCocinero" className='links'>LISTA DE PEDIDOS</Link></div>
+                <div className='btnHeader btnHeaderCocinero'><Link to="/cocinero/HistorialDeCocinero" className='links'>HISTORIAL DE PEDIDOS</Link></div>
             </div>
             <div className='contenedorSaludo'>
                 <p className='saludo'>Hola,cocinero</p>
@@ -21,6 +16,6 @@ const Cabecera = () => {
             </div>
         </header>
     )
- }
+}
 
-export default Cabecera
+export default Cabecera;

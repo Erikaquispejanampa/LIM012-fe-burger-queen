@@ -1,0 +1,131 @@
+@import '../../components/estilosCompartidos';
+
+.contenedorCuerpo{
+    @include definirTamaños(100%,690px);
+    @include definirFlex(flex, center, center); 
+    flex-direction: row;
+    margin: 0;
+}
+.contenedorPedido{
+    @include definirTamaños(45%,100%);
+    background-image: url('../../images/fondoladrillo.jpg');
+    @include displayFlex(column);
+    align-items: center;
+}
+.productos{
+    @include definirTamaños(55%,100%);
+}
+.descripcionPedido{
+    @include definirTamaños(85%,65%);
+    background: #FFFFFF;
+    @include tamanoLetra(20px);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.titulo{
+    width: 100%;
+    @include fontPadding(22px, 10px 0 10px 0);
+    font-weight: bold;
+    @include definirColores(#EDBA6B,#1C1712);
+    @include displayJustifyContent(center);
+    align-content: center;
+}
+.formulario{
+    @include tamanoLetra(22px);
+    padding-left: 10px;
+}
+input{
+    @include tamanoLetra(22px);
+    width: 50%;
+    margin: 10px;
+}
+.ingresoDatos{
+    border: 1px solid #ffffff;
+}
+input:focus, input[type]:focus {
+    outline: 0 none;
+}
+.btnEnviar{
+    width: 85%;
+    @include definirColores(#2EA44F,#FAFBFC);
+    @include fontPadding(25px, 10px);
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+.btnCancelar{
+    width: 85%;
+    @include definirColores(#FAFBFC,#CB3544);
+    @include fontPadding(25px, 10px);
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+.selectorMenu{
+    @include displayJustifyContent(center);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+.btnMenu{
+    @include definirColores(#B65D28,#FFFFFF);
+    @include fontPadding(20px, 15px);
+    border-radius: 450px;
+    border: 0px solid #FFFFFF;
+    margin-right: 15px;
+}
+.btnMenu:hover{
+    background: #80643A;
+}
+.btnMenu:focus {
+    outline: none;
+}
+.contenedorTabla{
+    @include definirTamaños(90%,260px);
+    overflow: scroll;
+}
+.tabla{
+    width: 100%;
+    padding-left: 10px;
+}
+.mostradorPedidos{
+    height: 80%;
+    overflow: scroll;
+}
+.total{
+    width: 100%;
+    @include fontPadding(25px, 10px 0 10px 0);
+    font-weight: bold;
+    @include definirColores(#EDBA6B,#1C1712);
+}
+@media screen and (min-width:1025px) {
+    .contenedorCuerpo{
+        height: 567px;
+    }
+    .descripcionPedido{
+        @include definirTamaños(75%,65%);
+    }
+    .formulario, .titulo{
+        @include tamanoLetra(20px);
+    }
+    input{
+        @include tamanoLetra(20px);
+        margin: 5px;
+    }
+    .contenedorTabla{
+        height: 220px;
+        padding-left: 10px;
+    }
+    .total{
+        width: 95%;
+        @include fontPadding(22px, 10px 0 10px 5%);
+    }
+    .btnEnviar{
+        width: 75%;
+        @include fontPadding(20px, 10px);
+    }
+    .btnCancelar{
+        width: 75%;
+        @include fontPadding(20px, 10px);
+    }
+    .btnMenu{
+        @include fontPadding(18px, 13px);
+    }
+}

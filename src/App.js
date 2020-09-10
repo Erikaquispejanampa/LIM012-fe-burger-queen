@@ -14,8 +14,8 @@ const App = () => {
             <Route exact path='/mesero/RealizarPedido' component={Page2}/>
             <Route exact path='/mesero/EstadoDePedido' component={Page3}/>
             <Route exact path='/mesero/HistorialDePedido' component={Page4}/>
-            <Route exact path='/cocinero/OrdenesDePedido' component={Page5}/>
-            <Route exact path='/cocinero/HistoricoCocina' component={Page6}/>
+            <Route exact path='/cocinero/EstadoCocinero' component={Page5}/>
+            <Route exact path='/cocinero/HistorialDeCocinero' component={Page6}/>
             <Route component={Page1}/>
         </Switch>
     );

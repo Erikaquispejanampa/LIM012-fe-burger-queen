@@ -1,27 +1,25 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
 import Cabecera from '../components/cabeceraCocinero';
 import {obtenerCocinaHistorico} from '../firebase/firestore';
-import ListaCocina from '../components/cocina/ListaCocina';
+import ListaHistorialMesero from '../components/cocina/ListaHistorialCocina';
+import './stylesPages/Page4.scss';
 
 const Page6 =()=> {
-
     const [dataPedidos, setdataPedidos] = useState([]);
-    
     useEffect(() => {
-      obtenerCocinaHistorico((data)=> {
-        console.log(data);
-        setdataPedidos(data);
-      });  
-       
+        obtenerCocinaHistorico((data)=> {
+            console.log(data);
+            setdataPedidos(data);
+        });   
     }, []); 
-
     return (
-            <Fragment>
+        <div className ="contenedorHistorialMesero">
             <Cabecera/>              
-            <ListaCocina pedidos={dataPedidos}  esHistorico ='true'/>
-          </Fragment>
-    )
-    
- }
+            <div className='contenedorPedidosMesero'>
+                <ListaHistorialMesero pedidos={dataPedidos}/>
+            </div>
+        </div>
+    ) 
+}
 
-export default Page6
+export default Page6;

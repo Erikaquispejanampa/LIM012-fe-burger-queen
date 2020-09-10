@@ -1,12 +1,7 @@
 import React from 'react'
-import './styles/cabeceraMesero.css'
+import './styles/cabeceraMesero.scss'
 import logo from '../images/logoBG.png'
-import {
-    // BrowserRouter as Router,
-    // Switch,
-    // Route,
-    Link
-  } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Cabecera = () => {
     return (
@@ -22,6 +17,6 @@ const Cabecera = () => {
             </div>
         </header>
     )
- }
+}
 
-export default Cabecera
+export default Cabecera;

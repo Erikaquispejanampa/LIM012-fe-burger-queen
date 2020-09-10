@@ -1,5 +1,5 @@
 import React from 'react'
-import './styles/ordenPedidos.css'
+import './styles/ordenPedidos.scss'
 
 const OrdenPedidos = ({idcontenedor, Increment, Decrement, counter, nombre, precio }) => {
     return (

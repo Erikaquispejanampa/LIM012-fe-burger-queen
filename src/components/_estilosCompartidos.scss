@@ -1,0 +1,47 @@
+@mixin btnCambiarActualizacion($tamano, $padding){
+    width: 100%;
+    background: #2EA44F;
+    color: #FFFFFF;
+    font-size: $tamano;
+    padding: $padding;
+    border: 0px solid #FFFFFF;
+}
+@mixin EstilosDeCard($marginTop, $width, $height, $background, $fontSize){
+    margin-top: $marginTop;
+    width: $width;
+    height: $height;
+    background: $background;
+    font-size: $fontSize;
+}
+@mixin definirTamaños($width, $height){
+    width: $width;
+    height: $height;
+}
+@mixin definirFlex($display, $align, $justify){
+    display: $display;
+    align-items: $align;
+    justify-content: $justify;
+}
+@mixin tamanoLetra($tamano){
+    font-size: $tamano;
+}
+@mixin definirColores($background, $color){
+    background: $background;
+    color: $color;
+}
+@mixin flexDirection {
+    display: flex;
+    flex-direction: row;
+}
+@mixin displayFlex($direccion){
+    display: flex;
+    flex-direction: $direccion;
+}
+@mixin displayJustifyContent($justify){
+    display: flex;
+    justify-content: $justify;
+}
+@mixin fontPadding($fontsize, $padding){
+    font-size: $fontsize;
+    padding: $padding;
+}

@@ -1,88 +1,24 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { Fragment } from "react";
 import DetallePedido from "./DetallePedido";
-
-const formatoFecha = (time) => {
-  
-  let date = new Date(time);
-  // let dia = date.getDay();
-  // let mes =  date.getMonth() + 1;
-  // let anio = date.getFullYear();
-
-  // console.log(date);
-  // console.log(dia);
-  // console.log(mes);
-  // console.log(anio);
-  // console.log(date.toLocaleString())
-  
-  return date.toLocaleString();
-}
-
-
-const intervaloTiempo = (date1,date2) => {
-  //Get 1 day in milliseconds
-  var one_day=1000*60*60*24;
-
-  // Convert both dates to milliseconds
-  var date1_ms = date1.getTime();
-  var date2_ms = date2.getTime();
-
-  // Calculate the difference in milliseconds
-  var difference_ms = date2_ms - date1_ms;
-  //take out milliseconds
-  difference_ms = difference_ms/1000;
-  var seconds = Math.floor(difference_ms % 60);
-  difference_ms = difference_ms/60; 
-  var minutes = Math.floor(difference_ms % 60);
-  difference_ms = difference_ms/60; 
-  var hours = Math.floor(difference_ms % 24);  
-  var days = Math.floor(difference_ms/24);
-  
-  // return days + ' days, ' + hours + ' hours, ' + minutes + ' minutes, and ' + seconds + ' seconds';
-  return  hours + ' hours, ' + minutes + ' minutes ';
-}
-
-
-
+import {productoServido} from '../../firebase/firestore'
+import './ListaPedidos.scss';
 
 const ListaPedidos = ({ pedidos, esHistorico }) => {
-  console.log(esHistorico);
-  return (
-    <Fragment>
-        <div>
-          {pedidos.map((pedido, key) => (
-            <section key={key}>
-
-              { esHistorico  =='true'  &&
-                <section>
-                  <div>Orden N°</div>
-                  <div>N° de Mesa: {pedido.mesa}</div>
-                  <div>Cliente: {pedido.cliente}</div>
-                  <div>Inicio : {formatoFecha(pedido.fechaini.toDate())}</div>
-                  <div>Fin: {formatoFecha(pedido.fechafin.toDate()) }</div>
-                  <div>Tiempo: { intervaloTiempo(pedido.fechaini.toDate() , pedido.fechafin.toDate()) } </div>
-                  
-                  <DetallePedido detalle={pedido.detalle} idPedido = { pedido.id} esHistorico = {esHistorico} />
+    console.log(esHistorico);
+    return (
+        <div className='contenedorCards'>
+            {pedidos.map((pedido, key) => (
+                <section className='cardEstadoPedido' key={key}>
+                    <section className='contenedorCardEstadoPedido'>
+                      <center className='tituloNroOrden'><strong>Orden N° {pedido.numero}</strong></center>
+                      <p className='tituloNroMesa'>N° de Mesa: {pedido.mesa}</p>
+                      <DetallePedido detalle={pedido.detalle}  idPedido={pedido.id} esHistorico={esHistorico} />
+                    </section>
+                    <button className='btnEntregado' onClick={()=>{productoServido(pedido.id)}}>ENTREGADO</button>
                 </section>
-              }
-              
-              { esHistorico  == 'false'  &&
-                <section>
-                  <div>Orden Nª {pedido.numero}</div>
-                  <div>Nª de Mesa: {pedido.mesa}</div>
-                  <DetallePedido detalle={pedido.detalle}  idPedido = { pedido.id} esHistorico = {esHistorico} />
-                </section>
-              } 
-
-              <button
-                  title= {pedido.flagentregadomesero ? "ENTREGADO":"PENDIENTE DE ENTREGAR" }
-              ></button>
-               
-
-            </section>
-          ))}
+            ))}
         </div>
-    </Fragment>
-  );
+    );
 };
 
 export default ListaPedidos;
