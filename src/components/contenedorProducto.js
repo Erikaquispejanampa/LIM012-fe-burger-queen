@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles/contenedorProducto.css';
+import './styles/contenedorProducto.scss';
 
 const Producto = ({ ImageProducto, nombreProducto, precioProducto, idProducto, click }) => {
     return (

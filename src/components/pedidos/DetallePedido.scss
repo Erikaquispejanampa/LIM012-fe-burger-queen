@@ -1,0 +1,39 @@
+@import '../estilosCompartidos';
+
+.detallesEstadoCocina{
+    @include definirTamaños(400px, 380px);
+    margin: 0;
+    overflow: scroll;
+    @include tamanoLetra(15px);
+}
+.tbMesero{
+    width: 100%;
+}
+.titulosTabla{
+    @include tamanoLetra(15px);
+}
+.descripcionTabla{
+    @include tamanoLetra(20px);
+}
+.checks{
+    text-align: center;
+}
+.controlChecks{
+    @include definirTamaños(40px, 40px);
+}
+@media screen and (min-width:1025px) {
+    .detallesEstadoCocina{
+        @include definirTamaños(300px, 250px);
+        @include tamanoLetra(20px);
+    }
+    .titulosTabla, .descripcionTabla{
+        @include tamanoLetra(13px);
+    }
+    .controlChecks{
+        @include definirTamaños(35px, 35px);
+    }
+    .titulosTabla{
+        @include tamanoLetra(10px);
+    }
+}
+

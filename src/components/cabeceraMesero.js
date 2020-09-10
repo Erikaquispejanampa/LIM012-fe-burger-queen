@@ -1,5 +1,5 @@
 import React from 'react'
-import './styles/cabeceraMesero.css'
+import './styles/cabeceraMesero.scss'
 import logo from '../images/logoBG.png'
 import { Link } from "react-router-dom";
 

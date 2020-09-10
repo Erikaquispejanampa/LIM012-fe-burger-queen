@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import db from '../conexionFirebase';
 
+
 export const crearPedido = (json) => {
   return db.collection("OrdenPedido").add(json);
 };
@@ -15,7 +16,9 @@ export const obtenerPedido = (id) => {
 };
 
 export const actualizarEstadoCocina = (idPedido, idDetalle) => {
+
   //Actualizar detalle de pedido, estado flagcocina
+
  obtenerPedido(idPedido).then((data) => {
     let pedido = data.data() 
     let terminadoCocina = true;
@@ -31,6 +34,7 @@ export const actualizarEstadoCocina = (idPedido, idDetalle) => {
     });
     
     pedido.flagterminadococina = terminadoCocina;
+
     actualizarPedido(idPedido,pedido);
     // firebase.firestore().collection("OrdenPedido").doc(idPedido).update(pedido);
 
@@ -99,38 +103,7 @@ export const obtenerNumeroPedido = () =>  {
 }
 
 
-  //Actualizar detalle de pedido, estado flagcocina
- obtenerPedido(idPedido).then((data) => {
-    let pedido = data.data() 
-    // let terminadoCocina = true;
-    pedido.detalle.map((prd) => {
-      if(prd.id === idDetalle){
-        prd.flagcocina = !prd.flagcocina;
-      }
-      // if(!prd.flagcocina)
-      //   terminadoCocina = false;
-    });
-    // pedido.flagterminadococina = terminadoCocina;
-    firebase.firestore().collection("OrdenPedido").doc(idPedido).update(pedido);
- });
-}
 
-export const actualizarEstadoMesero = (idPedido, idDetalle) => {
-  //Actualizar detalle de pedido, estado flagservido
- obtenerPedido(idPedido).then((data) => {
-    let pedido = data.data() 
-    // let terminadoMesero = true;
-    pedido.detalle.map((prd) => {
-      if(prd.id === idDetalle){
-        prd.flagservido = !prd.flagservido;
-      }
-      // if(!prd.flagcocina)
-      //   terminadoMesero = false;
-    });
-    // pedido.flagterminadococina = terminadoMesero;
-    firebase.firestore().collection("OrdenPedido").doc(idPedido).update(pedido);
- });
-}
 
 export const obtenerPedidosMesero = (callback) => firebase.firestore().collection("OrdenPedido")
   .orderBy('fechaini', 'asc')
@@ -149,6 +122,7 @@ export const obtenerPedidosMesero = (callback) => firebase.firestore().collectio
   .onSnapshot((querySnapshot) => {
     const pedidos = [];
     querySnapshot.forEach((doc) => {
+      
       if(doc.data().flagterminadococina === false){
         pedidos.push({ id : doc.id, ...doc.data() });
       }
@@ -184,6 +158,7 @@ export const obtenerPedidosMesero = (callback) => firebase.firestore().collectio
     callback(pedidos);
   });
 
+  
   export const productoPreparado = (idPedido) => {
     obtenerPedido(idPedido).then((data) => {
       const date = new Date();
@@ -227,3 +202,7 @@ export const obtenerMenu = (callback)  => db.collection('menu').get()
   })
   callback(Menu);
 })
+
+
+
+  

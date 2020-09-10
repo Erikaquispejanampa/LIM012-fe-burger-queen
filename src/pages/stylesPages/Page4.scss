@@ -1,0 +1,64 @@
+@import '../../components/estilosCompartidos';
+
+.contenedorHistorialMesero{
+    @include definirTamaños(100%,auto);
+    background: url('../../images/fondoladrillo.jpg');
+}
+.contenedorPedidosMesero{
+    @include definirTamaños(100%,690px);
+    overflow: scroll;
+    @include displayJustifyContent(space-around);
+    flex-wrap: wrap;
+}
+.historicoListaCard{
+    @include definirTamaños(43%,300px);
+    margin: 40px 0 40px 0;
+    background: #ffffff;
+}
+
+.cardEstadoHistorico{
+    @include definirTamaños(95%,100%);
+    margin-left: 5%;
+    font-size: 23px;
+}
+.contenedorDetallesHistorial{
+    @include displayFlex(column);
+    padding: 15px 0 20px 0;
+}
+.detallePedidoHistorico{
+    height: 140px;
+    overflow: scroll;
+}
+.precioTotal{
+    font-weight: bolder;
+    padding-left: 55%;
+}
+table {
+    border-collapse: collapse;
+    border: 1px solid #ffffff;
+}
+.td1 {
+    width: 10%;
+}
+.td2 {
+    width: 50%;
+}
+.td3 {
+    width: 15%;
+    justify-content: right;
+}
+@media screen and (min-width:1025px) {
+    .contenedorPedidosMesero{
+        height: 567px;
+    }
+    .cardEstadoHistorico{
+        font-size: 15px;
+    }
+    .detallePedidoHistorico{
+        height: 180px;
+    }
+    .historicoListaCard{
+        margin: 20px 0 20px 0;
+        width: 35%;
+    }
+}

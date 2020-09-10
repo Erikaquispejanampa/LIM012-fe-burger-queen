@@ -1,0 +1,43 @@
+@import '../estilosCompartidos';
+
+.contenedorProductoUno{
+    width: 40%;
+    @include definirColores(#FFFFFF, #000000);
+    padding: 0px;
+    border: 0px solid ;
+    margin: 20px 0px 20px 0px;
+}
+.contenedorNombre{
+    width: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+.nombre{
+    font-size: 18px;  
+    margin: 8px;
+}
+.contenedorPrecio{
+    @include definirTamaños(100%, 50px);
+    @include definirColores(#80643A, #FFFFFF);
+    font-weight: bold;
+    font-size: 25px;     
+}
+.imagenProducto{
+    @include definirTamaños(100%, 130px);
+}
+@media screen and (min-width:1025px) {
+    .contenedorProductoUno{
+        width: 37%;
+    }
+    .imagenProducto{
+        height: 100px;
+    }
+    .nombre{
+        font-size: 15px;
+    }
+    .contenedorPrecio{
+        height: 40px;
+        font-size: 20px;     
+    }
+}

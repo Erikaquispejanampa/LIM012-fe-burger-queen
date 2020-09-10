@@ -1,0 +1,16 @@
+@import '../../components/estilosCompartidos';
+$tamano: 100%;
+
+.contenedorListaCocinero{
+    @include definirTamaños($tamano,690px);
+    overflow-x: scroll;
+}
+.contenedorEstadoCocinero{
+    @include definirTamaños($tamano, auto);
+    background-image: url('../../images/fondoladrillo.jpg');
+}
+@media screen and (min-width:1025px) {
+    .contenedorListaCocinero{
+        height: 567px;
+    }
+}

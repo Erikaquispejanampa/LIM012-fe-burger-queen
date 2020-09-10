@@ -1,0 +1,12 @@
+@import '../estilosCompartidos';
+
+.detallesEstadoPreparado{
+    @include definirTamaños(90%, 422px);
+    margin-left: 5%;
+    overflow: scroll;
+}
+@media screen and (min-width:1025px) {
+    .detallesEstadoPreparado{
+        height: 310px;
+    }
+}

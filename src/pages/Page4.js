@@ -1,24 +1,27 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import Cabecera from '../components/cabeceraMesero'
-import {obtenerHistorial} from '../firebase/firestore'
-import ListaHistorial from '../components/historialPedidos/lista'
+import {obtenerPedidosHistorico} from '../firebase/firestore'
+import ListaPedidos from '../components/pedidos/ListaPedidos'
 
 const Page4 =()=> {
+
     const [dataPedidos, setdataPedidos] = useState([]);
     
     useEffect(() => {
-      obtenerHistorial((data)=> {
+        obtenerPedidosHistorico((data)=> {
         console.log(data);
         setdataPedidos(data);
-      });   
+      });  
+       
     }, []); 
 
     return (
-        <Fragment>
+            <Fragment>
             <Cabecera/>              
-            <ListaHistorial pedidos={dataPedidos}/>
-        </Fragment>
-    )  
-}
+            <ListaPedidos pedidos={dataPedidos} esHistorico ='true'/>
+          </Fragment>
+    )
+    
+ }
 
-export default Page4;
+export default Page4

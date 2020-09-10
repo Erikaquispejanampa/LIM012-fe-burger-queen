@@ -1,0 +1,19 @@
+@import '../../components/estilosCompartidos';
+$tamano: 100%;
+
+.contenedorEstadoPedidos{
+    @include definirTamaños($tamano, $tamano);
+    background-image: url('../../images/fondoladrillo.jpg');
+}
+.contenedorListaPedidos{
+    height: auto;
+    overflow: scroll;
+}
+.contenedorListaPedidos{
+    height: 690px;
+}
+@media screen and (min-width:1025px) {
+    .contenedorListaPedidos{
+        height: 567px;
+    }
+}

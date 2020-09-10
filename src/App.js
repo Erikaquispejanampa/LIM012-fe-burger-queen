@@ -5,6 +5,7 @@ import Page2 from './pages/Page2'
 import Page3 from './pages/Page3'
 import Page4 from './pages/Page4'
 import Page5 from './pages/Page5'
+import Page6 from './pages/Page6'
 
 const App = () => {
     return (
@@ -13,7 +14,8 @@ const App = () => {
             <Route exact path='/mesero/RealizarPedido' component={Page2}/>
             <Route exact path='/mesero/EstadoDePedido' component={Page3}/>
             <Route exact path='/mesero/HistorialDePedido' component={Page4}/>
-            <Route exact path='/cocinero' component={Page5}/>
+            <Route exact path='/cocinero/OrdenesDePedido' component={Page5}/>
+            <Route exact path='/cocinero/HistoricoCocina' component={Page6}/>
             <Route component={Page1}/>
         </Switch>
     );

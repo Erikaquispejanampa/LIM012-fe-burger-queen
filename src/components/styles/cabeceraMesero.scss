@@ -1,0 +1,62 @@
+@import '../estilosCompartidos';
+
+header{
+    @include definirTamaños(100%, 78px);
+    @include flexDirection;
+    @include definirColores(#412A21, #FFFFFF);
+    margin: 0; 
+}
+.contenedorBtn{
+    @include definirTamaños(70%, 100%);
+    @include flexDirection;
+}
+.contenedorSaludo{
+    width: 30%;
+    @include definirFlex(flex, center, center);
+    flex-direction: row;
+}
+.btnHeader{
+    @include definirTamaños(33%, 88%);
+    @include definirColores(#F0B02F, #1C1712);
+    border: {
+        style: solid;
+        color: #FFFFFF;
+        width: 5px 5px 5px 0px;/* top, right, bottom and left */
+    };
+    @include tamanoLetra(21px);
+    @include definirFlex(flex, center, center);
+}
+.btnHeaderCocinero{
+    width: 40%;
+}
+.links{
+    color: #1C1712;    
+}
+.btnHeader:hover{
+    background: #FFFFFF;
+}
+.btnHeader:focus {
+    outline: none;
+}
+.saludo{
+    width: 75%;
+    text-align: right;
+    margin: 0px;
+    @include tamanoLetra(30px);
+}
+.linkHome{
+    @include definirTamaños(25%, 100%);
+    margin: 0 5% 0 5%;
+}
+.logo{
+    @include definirTamaños(100%, 100%);
+}
+@media screen and (min-width:1025px) {
+    header{
+        height: 58px;
+    }
+    .btnHeader{
+        border-width: 3px 3px 4px 0px; /* top, right, bottom and left */
+        @include tamanoLetra(20px);
+    }
+}

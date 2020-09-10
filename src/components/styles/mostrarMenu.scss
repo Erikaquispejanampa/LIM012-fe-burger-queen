@@ -1,0 +1,7 @@
+@import '../estilosCompartidos';
+
+.contenedorProducto{
+    width: 100%;
+    @include displayJustifyContent(space-around);
+    flex-wrap: wrap;
+}

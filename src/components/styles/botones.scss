@@ -1,0 +1,16 @@
+@import '../estilosCompartidos';
+
+.elegirUsuario{
+    width: 278px;
+    background: linear-gradient(to right,#EDBA6B,  #F5DEBE);
+    border: 0px solid #000;
+    border-radius: 30px;
+    color: #1C1712;
+    @include tamanoLetra(48px);
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 60px;
+}
+a:link, a:visited, a:active {
+    text-decoration:none;
+}

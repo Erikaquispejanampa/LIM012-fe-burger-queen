@@ -1,0 +1,27 @@
+@import '../estilosCompartidos';
+
+.contenedorCardCocinero{
+    display : inline-flex;
+    flex-direction: row;
+}
+.cardCocinero{
+    @include EstilosDeCard(50px, 500px, 520px, #FFFFFF, 24px);
+    margin: 70px 0px 90px 50px;
+}
+.tituloNroOrden{
+    margin: 20px;
+}
+.btnPedidoTerminado{
+    @include btnCambiarActualizacion(35px, 15px);
+}
+
+@media screen and (min-width:1025px) {
+    .cardCocinero{
+        @include definirTamaños(400px, 420px);
+        @include tamanoLetra(15px);
+        margin: 50px 0px 30px 50px;
+    }
+    .btnPedidoTerminado{
+        @include tamanoLetra(20px);
+    }
+}

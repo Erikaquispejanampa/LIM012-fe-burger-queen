@@ -1,0 +1,43 @@
+@import '../../components/estilosCompartidos';
+
+$margen: 0;
+$tipo-letra: Arial, Helvetica, sans-serif;
+$tamaño: 100%;
+$flex-box: flex;
+@mixin centrado-contenido {
+    display: $flex-box;
+    justify-content: center;
+    align-items: center;
+}
+body{
+    margin: $margen;
+    font-family: $tipo-letra
+}
+.contenedor{
+    width: 100%;
+    display: $flex-box;
+}
+.contenedorImagen{
+    width: 40%;
+    @include centrado-contenido;
+}
+.logoPage1{
+    @include definirTamaños(85%, 45%);
+}
+.contenedorBotones{
+    width: 60%;
+    @include centrado-contenido;
+    background-image: url('../../images/fondoladrillo.jpg');
+    background-size: contain;
+    flex-direction: column;
+}
+@media screen and (max-width:1024px) {
+    .contenedor{
+        height: 768px;
+    }  
+}
+@media screen and (min-width:1025px) {
+    .contenedor{
+        height: 625px;
+    }  
+}
